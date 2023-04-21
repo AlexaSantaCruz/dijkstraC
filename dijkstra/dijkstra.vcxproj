@@ -142,10 +142,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="clickDerecho.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="variablesGlobal.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="global.h" />
+    <ClInclude Include="clickDerecho.h" />
+    <ClInclude Include="variablesGlobal.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
