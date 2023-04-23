@@ -20,8 +20,8 @@ using namespace sf;
 
 
 #define tamanio 60      //celdas
-//vector<pair<int, int>> pathD;        //usar para el camino mas corto
-extern bool celdasExploradas[tamanio][tamanio];//explored cells
+extern vector<pair<int, int>> caminoDijkstra;        //usar para el camino mas corto
+extern bool celdasExploradas[tamanio][tamanio];//celdas exploradas
 extern int celdaColor[tamanio][tamanio]; //celda esta pintada
 extern int inicioX, inicioY, finX , finY;      //origen(2,3)->fin(50,56)
 

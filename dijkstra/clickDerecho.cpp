@@ -9,7 +9,7 @@ void clickDerecho(sf::RenderWindow& window, char& presionarTecla) {
         {
         case 'F':
             // Actualizar las coordenadas y el área visual para el punto final
-
+            celdaColor[finX][finY]=0;
             XF = Mouse::getPosition(window).x;
             YF = Mouse::getPosition(window).y;
             finX = YF / 10;
@@ -22,6 +22,8 @@ void clickDerecho(sf::RenderWindow& window, char& presionarTecla) {
 
 
         case 'I':
+            celdaColor[inicioX][inicioY] = 0;
+
             XI = Mouse::getPosition(window).x;
             YI = Mouse::getPosition(window).y;
             inicioX = YI / 10;

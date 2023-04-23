@@ -143,11 +143,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="clickDerecho.cpp" />
+    <ClCompile Include="dijkstra.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="variablesGlobal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="clickDerecho.h" />
+    <ClInclude Include="dijkstra.h" />
     <ClInclude Include="variablesGlobal.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

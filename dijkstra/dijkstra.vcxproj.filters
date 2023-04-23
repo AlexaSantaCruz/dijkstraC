@@ -24,12 +24,18 @@
     <ClCompile Include="variablesGlobal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dijkstra.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="variablesGlobal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="clickDerecho.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dijkstra.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
