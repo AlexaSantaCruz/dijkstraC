@@ -4,7 +4,7 @@
 
 int main() {
 
-   
+
 
     bool mousePresionado = false; // variable para registrar si el botón del mouse está presionado
     char presionarTecla = 0;
@@ -33,8 +33,6 @@ int main() {
 
     RectangleShape btnInicio(Vector2f(75, 25));       //button Inicio
     btnInicio.setFillColor(Color::Green);
-    RectangleShape displayPantalla(Vector2f(75, 25));       // display de pantalla
-    displayPantalla.setFillColor(Color::White);
 
     RectangleShape rectangle(Vector2f(10, 10));      //Fondo del tablero blanco
     rectangle.setFillColor(Color::White);
@@ -62,61 +60,102 @@ int main() {
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
                 window.close();
- 
+
             if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left) {
                 mousePresionado = true; // se registra que el botón del mouse está presionado
 
-            }// se detecta si el botón del mouse fue liberado
-            if ( Keyboard::isKeyPressed(Keyboard::F)) {
+            }
+            if (Keyboard::isKeyPressed(Keyboard::F)) {
                 presionarTecla = 'F';
             }
             if (Keyboard::isKeyPressed(Keyboard::I)) {
                 presionarTecla = 'I';
-                cout << "entraI";
             }
             if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Right) {
-                clickDerecho( window, presionarTecla);
+                clickDerecho(window, presionarTecla);
 
             }
 
+            if (Keyboard::isKeyPressed(Keyboard::Z)) {
+
+            
+            }
 
             if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left) {
                 mousePresionado = false;
 
+            }
+            if (Keyboard::isKeyPressed(Keyboard::R)) {
+                for (int i = 0; i < 60; i++) {
+                    for (int j = 0; j < 60; j++) {
+                        if (i == 0 || i == 59 || j == 0 || j == 59) {
+                            mapa[i][j] = 0; // paredes de la orilla
+                        }
+                        else {
+                            mapa[i][j] = 1; // celdas normales
+                        }
+                    }
+                }
+
+                // reiniciar celdas exploradas y colores
+                for (int i = 0; i < tamanio; i++) {
+                    for (int j = 0; j < tamanio; j++) {
+                        celdasExploradas[i][j] = false;
+                        celdaColor[i][j] = 0;
+                    }
+                }
+
+                inicioX = 2;
+                inicioY = 2;
+                finX = 50;
+                finY = 56;
+
+                caminoDijkstra.clear();
+
+                window.clear();
             }
         }
         // se verifica si el botón del mouse está presionado
         if (mousePresionado) {
             int X = Mouse::getPosition(window).x;
             int Y = Mouse::getPosition(window).y;
-            int fila = Y / 10;      
+            int fila = Y / 10;
             int columna = X / 10;
-            if (mapa[fila][columna] == 0 && fila < 60 && columna < 60)
-                mapa[fila][columna] = 1;
-            else if (fila < 60 && columna < 60)
-                mapa[fila][columna] = 0;
+            if (!((fila == inicioX && columna == inicioY) || (fila == finX && columna == finY))) {
+                if (mapa[fila][columna] == 0 && fila < 60 && columna < 60)
+                    mapa[fila][columna] = 1;
+                else if (fila < 60 && columna < 60)
+                    mapa[fila][columna] = 0;
+            }
+           
             sleep(milliseconds(100));
+            for (int i = 0; i < 60; i++) {
+                for (int j = 0; j < 60; j++) {
+                    if (i == 0 || i == 59 || j == 0 || j == 59) {
+                        mapa[i][j] = 0; // paredes de la orilla
+                    }
+                }
+            }
             if (X > 600 && X < 675 && Y>0 && Y < 25) {
                 hiloD.launch();
-                
+
+
             }
-            
+
 
         }
         // se dibuja el resto de la ventana como antes
         window.clear();
         btnInicio.setPosition(600, 0);
         window.draw(btnInicio);      //Dijkstra mostrarlo
-        displayPantalla.setPosition(725, 0);        //tamaño del dijkstra pero background
-        window.draw(displayPantalla);
         textoBoton.setPosition(610, 0);       //Texto que dice dijkstra
         DistanciaTot.setPosition(725, 0);     //muestra fondo para el total del dijsktra
-       
+
         window.draw(textoBoton);
-       
+
         window.draw(DistanciaTot);
 
-      
+
         celdaInicio.setPosition(inicioY * 10, inicioX * 10);
         window.draw(celdaInicio);     //INICIO
 
@@ -124,6 +163,7 @@ int main() {
 
         celdaFin.setPosition(finY * 10, finX * 10);
         window.draw(celdaFin);        //FIN
+    
 
         if (!caminoDijkstra.empty()) {
             for (int i = 0; i < caminoDijkstra.size(); i++) {

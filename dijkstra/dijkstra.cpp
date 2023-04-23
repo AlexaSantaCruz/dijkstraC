@@ -83,14 +83,16 @@ void encontrarMinimo(float distancia[tamanio][tamanio], int &minimoX, int &minim
 }
 
 void encontrarCamino(pair<int, int> anterior[tamanio][tamanio], float distancia[tamanio][tamanio]) {
-	cout << "\nLength of Dijkstra path is: " << distancia[finX][finY] << endl;
+	cout << "\nDistancia total es: " << distancia[finX][finY] << endl;
 	while (anterior[finX][finY].first != inicioX || anterior[finX][finY].second != inicioX) {        // both simultaneously equal to source coordinates
 		sf::sleep(milliseconds(10));        //delay shortest pathD
-		cout << "go to ->\n(" << anterior[finX][finY].first << "," << anterior[finX][finY].second << ") ";
+		cout << "hacia ->\n(" << anterior[finX][finY].first << "," << anterior[finX][finY].second << ") ";
 		caminoDijkstra.push_back(make_pair(anterior[finX][finY].first, anterior[finX][finY].second));
         int tempX = finX;
         int tempY = finY;
 		finX = anterior[tempX][tempY].first;
 		finY = anterior[tempX][tempY].second;
+        if (finX==0 && finY == 0) {
+        return;}
 	}
 }
