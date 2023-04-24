@@ -12,11 +12,17 @@ void clickDerecho(sf::RenderWindow& window, char& presionarTecla) {
             celdaColor[finX][finY]=0;
             XF = Mouse::getPosition(window).x;
             YF = Mouse::getPosition(window).y;
-            finX = YF / 10;
-            finY = XF / 10;
-            cout << "presionasteF en (" << XF / 10 << "," << YF / 10 << ")" << endl;
+           
+            if (inicioX == YF / 10 && inicioY == XF / 10) {
+                cout << "El inicio y el fin no pueden ser el mismo, no es por filosofo, así son las reglas"<<endl;
+            }
+            else {
+                finX = YF / 10;
+                finY = XF / 10;
+                celdaColor[finX][finY] = 2;
 
-            celdaColor[finX][finY] = 2;
+            }
+
 
             break;
 
@@ -26,11 +32,19 @@ void clickDerecho(sf::RenderWindow& window, char& presionarTecla) {
 
             XI = Mouse::getPosition(window).x;
             YI = Mouse::getPosition(window).y;
-            inicioX = YI / 10;
-            inicioY = XI / 10;
-            cout << "presionasteI en (" << XI / 10 << "," << YI / 10 << ")" << endl;
 
-            celdaColor[inicioX][inicioY] = 1;
+            if (YI / 10 == finX &&  XI / 10== finY) {
+                cout << "El inicio y el fin no pueden ser el mismo, no es por filosofo, así son las reglas"<<endl;
+
+            }
+            else {
+                inicioX = YI / 10;
+                inicioY = XI / 10;
+                celdaColor[inicioX][inicioY] = 1;
+
+            }
+
+
 
             break;
         }

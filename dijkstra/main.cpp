@@ -38,10 +38,10 @@ int main() {
     rectangle.setFillColor(Color::White);
     RectangleShape celdasNegras(Vector2f(10, 10));     //fondo negro
     celdasNegras.setFillColor(Color::Black);
-    RectangleShape fondoBoton(Vector2f(10, 10));     //boton inicio fondo
-    fondoBoton.setFillColor(Color::Red);
-    fondoBoton.setOutlineThickness(2);
-    fondoBoton.setOutlineColor(Color::Yellow);
+    RectangleShape celdasExp(Vector2f(10, 10));     //celdas Exploradas
+    celdasExp.setFillColor(Color::Blue);
+    celdasExp.setOutlineThickness(2);
+    celdasExp.setOutlineColor(Color::Yellow);
 
     RectangleShape celdaInicio(Vector2f(10, 10));
     celdaInicio.setFillColor(Color::Green);
@@ -51,13 +51,14 @@ int main() {
     celdaFin.setFillColor(Color::Red);
     celdaFin.setOutlineThickness(2);
     celdaFin.setOutlineColor(Color::Black);
-    RectangleShape yrectangle(Vector2f(10, 10));
-    yrectangle.setFillColor(Color::Yellow);
+    RectangleShape celdasExpl(Vector2f(10, 10));
+    celdasExpl.setFillColor(Color::Yellow);
     // Display
 
     while (window.isOpen()) {
         Event event;
         while (window.pollEvent(event)) {
+
             if (event.type == Event::Closed)
                 window.close();
 
@@ -77,8 +78,31 @@ int main() {
             }
 
             if (Keyboard::isKeyPressed(Keyboard::Z)) {
-
+                if (caminoDijkstra.empty()) {
+                    cout << "todavia no has presionado iniciar para ver tu mapa"<<endl;
+                    cout << "Si estas viendo este error es pq me quisiste quebrar el codigo, no sean así >:,(";
+                    sleep(milliseconds(500));
+                }
+                else {
+                celdaColor[caminoDijkstra[caminoDijkstra.size()-1].first][caminoDijkstra[caminoDijkstra.size()-1].second] = 0;
+                pasoAnterior();
+                }
+                
+                
+                   
             
+            }
+            if (Keyboard::isKeyPressed(Keyboard::Y)) {
+                if (caminoDijkstra.empty()) {
+                    cout << "todavia no has presionado iniciar para ver tu mapa" << endl;
+                    sleep(milliseconds(500));
+
+                }
+                else {
+                pasoSiguiente();
+
+                }
+
             }
 
             if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left) {
@@ -137,6 +161,9 @@ int main() {
                 }
             }
             if (X > 600 && X < 675 && Y>0 && Y < 25) {
+                finTempX = finX;
+                finTempY = finY;
+                sleep(seconds(2));
                 hiloD.launch();
 
 
@@ -159,7 +186,9 @@ int main() {
         celdaInicio.setPosition(inicioY * 10, inicioX * 10);
         window.draw(celdaInicio);     //INICIO
 
+       
         celdaColor[inicioX][inicioY] = 1;
+        celdaColor[finX][finY] = 1;
 
         celdaFin.setPosition(finY * 10, finX * 10);
         window.draw(celdaFin);        //FIN
@@ -167,20 +196,14 @@ int main() {
 
         if (!caminoDijkstra.empty()) {
             for (int i = 0; i < caminoDijkstra.size(); i++) {
-                fondoBoton.setPosition(caminoDijkstra[i].second * 10, caminoDijkstra[i].first * 10);     //Reversed notion of row & column
-                window.draw(fondoBoton);        //final pathD
+                celdasExp.setPosition(caminoDijkstra[i].second * 10, caminoDijkstra[i].first * 10);     //se da la posicion de la celda explorada
+                window.draw(celdasExp);        //final pathD
                 celdaColor[caminoDijkstra[i].first][caminoDijkstra[i].second] = 1;
+
             }
+    
         }
-        celdaInicio.setPosition(inicioY * 10, inicioX * 10);
-        window.draw(celdaInicio);     //inicio
-        celdaColor[inicioX][inicioY] = 1;
-        celdaInicio.setPosition(finY * 10, finX * 10);
-        window.draw(celdaFin);        //fin
 
-
-
-        celdaColor[finX][finY] = 1;
         for (int i = 0; i <= 590; i += 10)
             for (int j = 0; j <= 590; j += 10) {
                 if (mapa[i / 10][j / 10] == 0) {
@@ -190,10 +213,10 @@ int main() {
                     window.draw(celdasNegras);        //Paredes del usuario
                 }
                 if (celdasExploradas[i / 10][j / 10] == true && celdaColor[i / 10][j / 10] == 0) {
-                    yrectangle.setOutlineThickness(2);
-                    yrectangle.setOutlineColor(Color::Red);
-                    yrectangle.setPosition(j, i);
-                    window.draw(yrectangle);        // celdas exploradas por Dijkstra
+                    celdasExpl.setOutlineThickness(2);
+                    celdasExpl.setOutlineColor(Color::Red);
+                    celdasExpl.setPosition(j, i);
+                    window.draw(celdasExpl);        // celdas exploradas por Dijkstra
                 }
               
                 if (mapa[i / 10][j / 10] == 1 && celdasExploradas[i / 10][j / 10] == false && celdaColor[i / 10][j / 10] == 0) {
