@@ -26,7 +26,8 @@ extern bool celdasExploradas[tamanio][tamanio];//celdas exploradas
 extern int celdaColor[tamanio][tamanio]; //celda esta pintada
 extern int inicioX, inicioY, finX , finY;      //origen(2,3)->fin(50,56)
 extern int finTempX, finTempY;
-extern vector<pair<int, int>> anteriorPasos;
+extern pair<int, int> anteriorPasos[tamanio][tamanio];
+
 
 
 #endif // VARIABLES_GLOBAL_H

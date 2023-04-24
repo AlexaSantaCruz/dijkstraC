@@ -2,6 +2,7 @@
 #include "dijkstra.h"
 
 int index;
+int indexT;
 
 void dijkstra(int mapa[tamanio][tamanio]) {
     pair<int, int> anterior[tamanio][tamanio];
@@ -111,25 +112,43 @@ void encontrarCamino(pair<int, int> anterior[tamanio][tamanio], float distancia[
 	
     for (int i = 0; i < tamanio; i++) {
         for (int j = 0; j < tamanio; j++) {
-            anteriorPasos.push_back(anterior[i][j]);
+            anteriorPasos[i][j] = anterior[i][j];
         }
     }
+
+   
+
     index = caminoDijkstra.size();
+    indexT = index;
 
 }
 
 void pasoAnterior() {
+   
     caminoDijkstra.pop_back();
-    anteriorPasos.pop_back();
     sleep(milliseconds(500));
-    index--;    
+    finTempX = caminoDijkstra.back().first;
+    finTempY = caminoDijkstra.back().second;
+    indexT--;
+    cout << indexT<<endl;
+        
 }
 
 void pasoSiguiente() {
-    caminoDijkstra.push_back(anteriorPasos.at(finTempX * tamanio + finTempY));
+    if (indexT>=index) {
+        cout << "ya llegaste";
+    }
+    else {
+    caminoDijkstra.push_back(make_pair(anteriorPasos[finTempX][finTempY].first, anteriorPasos[finTempX][finTempY].second));
     int tempX = finTempX;
     int tempY = finTempY;
-    finTempX = anteriorPasos.at(tempX * tamanio + tempY).first;
-    finTempY = anteriorPasos.at(tempX * tamanio + tempY).second;
+    finTempX = anteriorPasos[tempX][tempY].first;
+    finTempY = anteriorPasos[tempX][tempY].second;
+
+    indexT++;
+    cout << indexT << endl;
+
+    }
+    
 }
 
